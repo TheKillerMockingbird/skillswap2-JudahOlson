@@ -1,4 +1,4 @@
-const { filterSkillsByCategory, calculateTotalCost } = require('../skillswap-functions');
+const { filterSkillsByCategory, calculateTotalCost, matchSkillsToUser } = require('../skillswap-functions');
 
 describe('filterSkillsByCategory', () => {
 
