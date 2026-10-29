@@ -13,6 +13,10 @@ function matchUsers(userA, userB) {
   return false;
 }
 
+function matchSkillsToUser(userNeeds, skills) {
+  return [];
+}
+
 module.exports = {
   filterSkillsByCategory,
   calculateTotalCost,
