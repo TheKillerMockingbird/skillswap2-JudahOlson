@@ -1,5 +1,8 @@
 function filterSkillsByCategory(skills, category) {
-  return [];
+  if (category === 'All') {
+    return skills;
+  }
+  return skills.filter(skill => skill.category === category);
 }
 
 function calculateSessionCost(hourlyRate, hours) {
