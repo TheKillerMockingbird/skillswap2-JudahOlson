@@ -65,3 +65,42 @@ calculateBtn.addEventListener('click', () => {
   const total = calculateTotalCost(rate, hours);
   costResult.textContent = `Total Cost: $${total.toFixed(2)}`;
 });
+
+function matchSkillsToUser(userNeeds, skills) {
+  return skills.filter(skill => {
+    return skill.category === userNeeds.category && skill.price <= userNeeds.maxPrice;
+  });
+}
+
+const matchCategory = document.getElementById('match-category');
+const matchMaxPrice = document.getElementById('match-max-price');
+const findMatchBtn = document.getElementById('find-match-btn');
+const matchResults = document.getElementById('match-results');
+
+findMatchBtn.addEventListener('click', () => {
+  const userNeeds = {
+    category: matchCategory.value,
+    maxPrice: parseFloat(matchMaxPrice.value) || 0
+  };
+
+  const matched = matchSkillsToUser(userNeeds, allSkills);
+  
+  matchResults.innerHTML = '';
+
+  if (matched.length === 0) {
+    matchResults.innerHTML = '<p>No matching skills found.</p>';
+    return;
+  }
+
+  matched.forEach(skill => {
+    const card = document.createElement('div');
+    card.className = 'skill-card';
+    card.innerHTML = `
+      <h3>${skill.title}</h3>
+      <p class="description">${skill.category}</p>
+      <p class="price">$${skill.price} / hour</p>
+      <p class="provider">Provider: ${skill.provider || 'N/A'}</p>
+    `;
+    matchResults.appendChild(card);
+  });
+});
