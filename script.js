@@ -49,3 +49,19 @@ filterButtons.forEach(button => {
     renderSkills(filtered);
   });
 });
+
+function calculateTotalCost(hourlyRate, hours) {
+  return hourlyRate * hours;
+}
+
+const rateInput = document.getElementById('hourly-rate');
+const hoursInput = document.getElementById('hours');
+const calculateBtn = document.getElementById('calculate-btn');
+const costResult = document.getElementById('cost-result');
+
+calculateBtn.addEventListener('click', () => {
+  const rate = parseFloat(rateInput.value) || 0;
+  const hours = parseFloat(hoursInput.value) || 0;
+  const total = calculateTotalCost(rate, hours);
+  costResult.textContent = `Total Cost: $${total.toFixed(2)}`;
+});
