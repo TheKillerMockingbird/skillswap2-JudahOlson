@@ -5,7 +5,7 @@ function filterSkillsByCategory(skills, category) {
   return skills.filter(skill => skill.category === category);
 }
 
-function calculateSessionCost(hourlyRate, hours) {
+function calculateTotalCost(hourlyRate, hours) {
   return hourlyRate * hours;
 }
 
@@ -15,6 +15,6 @@ function matchUsers(userA, userB) {
 
 module.exports = {
   filterSkillsByCategory,
-  calculateSessionCost,
+  calculateTotalCost,
   matchUsers
 };
