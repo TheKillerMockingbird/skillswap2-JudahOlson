@@ -1,4 +1,4 @@
-const { filterSkillsByCategory, calculateTotalCost } = require('../skillswap-functions');
+const { filterSkillsByCategory, calculateTotalCost, matchSkillsToUser } = require('../skillswap-functions');
 
 describe('filterSkillsByCategory', () => {
 
@@ -43,6 +43,48 @@ describe('calculateTotalCost', () => {
 
   test('returns correct value for decimal hours', () => {
     expect(calculateTotalCost(25, 1.5)).toBe(37.5);
+  });
+
+});
+
+describe('matchSkillsToUser', () => {
+
+  const skills = [
+    { title: 'Python Tutoring', category: 'Programming', price: 20 },
+    { title: 'JavaScript Help', category: 'Programming', price: 25 },
+    { title: 'Guitar Lessons', category: 'Music', price: 15 },
+    { title: 'Resume Review', category: 'Career', price: 0 }
+  ];
+
+  test('matches by category and price', () => {
+    const userNeeds = { category: 'Programming', maxPrice: 30 };
+    const result = matchSkillsToUser(userNeeds, skills);
+    expect(result).toEqual([
+      { title: 'Python Tutoring', category: 'Programming', price: 20 },
+      { title: 'JavaScript Help', category: 'Programming', price: 25 }
+    ]);
+  });
+
+  test('filters by max price', () => {
+    const userNeeds = { category: 'Programming', maxPrice: 20 };
+    const result = matchSkillsToUser(userNeeds, skills);
+    expect(result).toEqual([
+      { title: 'Python Tutoring', category: 'Programming', price: 20 }
+    ]);
+  });
+
+  test('returns empty array for no matches', () => {
+    const userNeeds = { category: 'Cooking', maxPrice: 100 };
+    const result = matchSkillsToUser(userNeeds, skills);
+    expect(result).toEqual([]);
+  });
+
+  test('includes free skills', () => {
+    const userNeeds = { category: 'Career', maxPrice: 0 };
+    const result = matchSkillsToUser(userNeeds, skills);
+    expect(result).toEqual([
+      { title: 'Resume Review', category: 'Career', price: 0 }
+    ]);
   });
 
 });
